@@ -4,7 +4,7 @@ import { Sun, Moon, Github, Twitter, Book, Home, FileText, Code, MessageCircle, 
 import * as THREE from 'three';
 
 // Import React Router components
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter } from 'react-router-dom';
 
 // Import your new ContactPage
 import ContactPage from './ContactPage'; // Adjust path if needed
@@ -34,7 +34,7 @@ const App = () => {
   };
 
   return (
-    <Router> {/* Wrap your app with Router */}
+   <BrowserRouter basename="/portfolio">
       <div className="relative min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 font-inter transition-colors duration-300 overflow-hidden">
         {/* Animated Background */}
         <AnimatedBackground />
@@ -56,7 +56,7 @@ const App = () => {
           <Footer />
         </div>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 };
 
