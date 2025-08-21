@@ -167,25 +167,34 @@ const AnimatedBackground = () => {
 };
 
 // Header Component (Updated NavLink for Contact)
+// Header Component (Updated with mobile menu logic)
 const Header = ({ toggleDarkMode, darkMode }) => {
+  // 1. Add state to track if the mobile menu is open
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // 2. Function to toggle the menu state
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm py-4 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo and Name */}
-        <Link to="/" className="flex items-center space-x-2 text-2xl font-bold text-gray-800 dark:text-gray-100"> {/* Use Link for home */}
+        <Link to="/" className="flex items-center space-x-2 text-2xl font-bold text-gray-800 dark:text-gray-100">
           <img src="https://placehold.co/40x40/6366f1/ffffff?text=N" alt="Nagendra's Logo" className="rounded-full" />
           <span>Nagendra Thakur Sharma</span>
         </Link>
 
         {/* Navigation */}
         <nav className="hidden md:flex space-x-6">
-          <NavLink icon={<Home size={18} />} text="Home" to="/" /> {/* Use 'to' for Link */}
+          <NavLink icon={<Home size={18} />} text="Home" to="/" />
           <NavLink icon={<Code size={18} />} text="Projects" to="/#projects" />
           <NavLink icon={<FileText size={18} />} text="Blog" to="/#blog" />
-          <NavLink icon={<MessageCircle size={18} />} text="Contact" to="/contact" /> {/* Link to new page */}
+          <NavLink icon={<MessageCircle size={18} />} text="Contact" to="/contact" />
         </nav>
 
-        {/* Dark Mode Toggle & Mobile Menu Button */}
+        {/* Mobile Menu & Dark Mode Toggle */}
         <div className="flex items-center space-x-4">
           <button
             onClick={toggleDarkMode}
@@ -194,12 +203,25 @@ const Header = ({ toggleDarkMode, darkMode }) => {
           >
             {darkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
-          <button className="md:hidden p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          {/* Mobile Menu Button */}
+          <button 
+            onClick={toggleMenu} // 3. Connect button to toggle function
+            className="md:hidden p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            aria-label="Open mobile menu"
+          >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>
           </button>
         </div>
+      </div>
+
+      {/* 4. Conditional Mobile Menu - This is a simple slide-down effect */}
+      <div className={`${isMenuOpen ? 'flex' : 'hidden'} md:hidden flex-col items-center mt-4 space-y-4`}>
+        <NavLink icon={<Home size={18} />} text="Home" to="/" />
+        <NavLink icon={<Code size={18} />} text="Projects" to="/#projects" />
+        <NavLink icon={<FileText size={18} />} text="Blog" to="/#blog" />
+        <NavLink icon={<MessageCircle size={18} />} text="Contact" to="/contact" />
       </div>
     </header>
   );
